@@ -23,6 +23,21 @@ docker image pull hello-world
 docker container run hello-world
 ```
 
+6. run image and simultaniously interactive with a tag, where -it = 'interactive'.
+```
+docker container run -it ubuntu bash
+```
+
+6. show container running now
+```
+docker container ls
+```
+
+7. kill container
+```
+docker container kill [containerId]
+```
+
 
 
 
