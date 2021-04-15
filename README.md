@@ -38,7 +38,13 @@ docker container ls
 docker container kill [containerId]
 ```
 
-
+7. kill container
+```
+FROM python:3.6
+COPY . /app
+WORKDIR /app
+CMD python3.6 main.py
+```
 
 
 
