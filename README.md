@@ -38,13 +38,66 @@ docker container ls
 docker container kill [containerId]
 ```
 
-7. kill container
+8. write Dockerfile
 ```
+FROM python:3.6 # pull image(python:3.6) and add new function on the image
+COPY . /app # copy local file to image env
+WORKDIR /app # point running path
+CMD python3.6 main.py # command
+```
+
+9. build image
+```
+docker image build -t [image-name] . # "." it means building image in now path
+```
+
+10. put parameter in code
+```
+Dockerfile =>
 FROM python:3.6
 COPY . /app
 WORKDIR /app
-CMD python3.6 main.py
+ENTRYPOINT python3.6 main.py
+CMD ['5']
+-------------------
+main.py =>
+import sys
+input_level = int(sys.argv[1])
+print(input_level)
 ```
+
+11. docker port : docker port point to localhost port
+```
+Dockerfile =>
+FROM python:3.6
+COPY . /app
+WORKDIR /app
+RUN pip3 install -r requirement.txt
+EXPOSE 5000
+CMD python3.6 main.py
+-------------------
+main.py =>
+from flask import Flask, render_template
+from flask_cors import CORS # need to mention
+import json
+
+app = Flask(__name__)
+CORS(app)
+
+@app.route('/book')
+def json_file():
+    file = open('./book.json')
+    json_data = json.load(file)
+    return json_data
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+```
+
+
+
+
+
 
 
 
