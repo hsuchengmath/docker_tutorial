@@ -92,14 +92,5 @@ def json_file():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+=> localhost command : docker container run -p 3000:5000 python-web # 5000->3000
 ```
-
-
-
-
-
-
-
-
-
-
