@@ -94,3 +94,23 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
 => localhost command : docker container run -p 3000:5000 python-web # 5000->3000
 ```
+
+11. Manage data in docker (volume) 
+```
+main.py =>
+with open('test.txt','w') as f:
+    f.write('finish!!')
+-------------------
+Dockerfile =>
+FROM python:3.6
+COPY . /app
+WORKDIR /app
+CMD python3.6 main.py
+-------------------
+localhost command =>
+docker volume create volume-data # create a volume and its name is volume-data.
+docker volume ls # check volume
+docker volume inspect volume-data # check specific volume detail information
+docker container run -v volume-data:/app/ python-data-volume # -v xx:oo it means 'app/' (docker env) synchronize to volume-data.
+docker container run -v volume-data:/volume-data -it ubuntu bash # go to another container(bash) and point volume-data to /volume-data (path)
+```
