@@ -114,3 +114,42 @@ docker volume inspect volume-data # check specific volume detail information
 docker container run -v volume-data:/app/ python-data-volume # -v xx:oo it means 'app/' (docker env) synchronize to volume-data.
 docker container run -v volume-data:/volume-data -it ubuntu bash # go to another container(bash) and point volume-data to /volume-data (path)
 ```
+
+11. Manage data in docker (mint mount) 
+```
+main.py =>
+with open('test.txt','w') as f:
+    f.write('finish!!')
+-------------------
+Dockerfile =>
+FROM python:3.6
+COPY . /app
+WORKDIR /app
+CMD python3.6 main.py
+-------------------
+localhost command =>
+docker container run -v localhost_path:/app/ python-data-volume # -v xx:oo it means 'app/' (docker env) synchronize to volume-data.
+docker container run -v localhost_path:/volume-data -it ubuntu bash # go to another container(bash) and point volume-data to /volume-data (path)
+```
+
+12. docker network (bridge):
+```
+docker network create --driver bridge [self-def bridge network_name]
+docker network ls
+docker network inspect [self-def bridge network_name]
+docker container run -dit --network [self-def network_name] --name [container_name1] alpine sh
+docker container run -dit --network [self-def network_name] --name [container_name2] alpine sh
+## test network
+docker exec -it [container_name1] sh
+ping [container2 network]
+docker exec -it [container_name2] sh
+ping [container1 network]
+```
+
+13. docker network (host):
+```
+docker network create --driver host [self-def host network_name]
+docker network ls
+docker network inspect [self-def bridge network_name]
+```
+
